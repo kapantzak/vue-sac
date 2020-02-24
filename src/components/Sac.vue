@@ -4,7 +4,29 @@
     <div class="sac-overlay">
       <div class="sac-modal">
         <header>Modal title</header>
-        <div class="sac-modal-body">test</div>
+        <div class="sac-modal-body">
+          <div class="sac-modal-tooltip">Tools</div>
+          <div class="sac-modal-items">
+            <div class="sac-item">
+              <div class="sac-item-label">
+                <font-awesome-icon
+                  @click="expanded = !expanded"
+                  class="sac-item-toggle-icon"
+                  :icon="['fas', toggleIconClass]"
+                />
+                <span class="sac-item-label-text">Item 1</span>
+              </div>
+              <div class="sac-item-children" v-if="expanded">
+                <div class="sac-item">
+                  <div class="sac-item-label">Item 1.1</div>
+                </div>
+                <div class="sac-item">
+                  <div class="sac-item-label">Item 1.2</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <footer>Footer</footer>
       </div>
     </div>
@@ -12,20 +34,32 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faCaretDown);
+library.add(faCaretRight);
+
 export default {
   name: "Sac",
+  components: {
+    "font-awesome-icon": FontAwesomeIcon
+  },
   data: () => ({
-    datasource: [
-      {
-        id: 1,
-        descr: "One"
-      }
-    ]
-  })
+    expanded: true
+  }),
+  computed: {
+    toggleIconClass: function() {
+      return this.expanded ? "caret-right" : "caret-down";
+    }
+  }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+$items-margin-left: 10px;
+
 .sac-overlay {
   position: fixed;
   width: 100%;
@@ -44,5 +78,18 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.sac-modal-items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 (-$items-margin-left);
+}
+.sac-item {
+  margin-left: $items-margin-left;
+}
+.sac-item-toggle-icon {
+  margin-right: 5px;
+  cursor: pointer;
 }
 </style>
