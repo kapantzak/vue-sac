@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$items-margin-left: 10px;
+$items-margin-left: 15px;
 
 .sac-overlay {
   position: fixed;
