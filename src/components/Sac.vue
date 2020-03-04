@@ -7,24 +7,7 @@
         <div class="sac-modal-body">
           <div class="sac-modal-tooltip">Tools</div>
           <div class="sac-modal-items">
-            <div class="sac-item">
-              <div class="sac-item-label">
-                <font-awesome-icon
-                  @click="expanded = !expanded"
-                  class="sac-item-toggle-icon"
-                  :icon="['fas', toggleIconClass]"
-                />
-                <span class="sac-item-label-text">Item 1</span>
-              </div>
-              <div class="sac-item-children" v-if="expanded">
-                <div class="sac-item">
-                  <div class="sac-item-label">Item 1.1</div>
-                </div>
-                <div class="sac-item">
-                  <div class="sac-item-label">Item 1.2</div>
-                </div>
-              </div>
-            </div>
+            <sac-item v-for="item in data" :key="item.id" v-bind:item="item" />
           </div>
         </div>
         <footer>Footer</footer>
@@ -34,30 +17,55 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
-
-library.add(faCaretDown);
-library.add(faCaretRight);
+import SacItem from "./SacItem";
 
 export default {
   name: "Sac",
   components: {
-    "font-awesome-icon": FontAwesomeIcon
+    "sac-item": SacItem
   },
   data: () => ({
-    expanded: true
-  }),
-  computed: {
-    toggleIconClass: function() {
-      return this.expanded ? "caret-right" : "caret-down";
-    }
-  }
+    data: [
+      {
+        id: 1,
+        text: "Item 1",
+        children: [
+          {
+            id: 2,
+            text: "Item 2"
+          },
+          {
+            id: 3,
+            text: "Item 3"
+          }
+        ]
+      },
+      {
+        id: 4,
+        text: "Item 4",
+        children: [
+          {
+            id: 5,
+            text: "Item 5",
+            children: [
+              {
+                id: 7,
+                text: "Item 7"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 6,
+        text: "Item 6"
+      }
+    ]
+  })
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $items-margin-left: 15px;
 
 .sac-overlay {
@@ -83,10 +91,10 @@ $items-margin-left: 15px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0 (-$items-margin-left);
+  padding: 15px 0;
 }
-.sac-item {
-  margin-left: $items-margin-left;
+.sac-item > .sac-item-children > .sac-item {
+  padding-left: 15px;
 }
 .sac-item-toggle-icon {
   margin-right: 5px;
