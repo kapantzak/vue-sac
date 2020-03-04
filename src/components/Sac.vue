@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss">
-$items-margin-left: 15px;
+$items-distance: 15px;
 
 .sac-overlay {
   position: fixed;
@@ -93,11 +93,14 @@ $items-margin-left: 15px;
   flex-wrap: wrap;
   padding: 15px 0;
 }
-.sac-item > .sac-item-children > .sac-item {
-  padding-left: 15px;
+.sac-modal-items > .sac-item:not(:first-of-type) {
+  padding-left: $items-distance;
 }
-.sac-item-toggle-icon {
-  margin-right: 5px;
+.sac-item > .sac-item-children > .sac-item {
+  padding-left: $items-distance;
+}
+.sac-item-toggle-icon.svg-inline--fa {
+  width: $items-distance;
   cursor: pointer;
 }
 </style>
